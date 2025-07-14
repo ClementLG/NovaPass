@@ -8,16 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const modeToggle = document.getElementById('mode-toggle');
     const passwordOptions = document.getElementById('password-options');
     const passphraseOptions = document.getElementById('passphrase-options');
-
-    // Selectors for password mode
     const lengthSlider = document.getElementById('length-slider');
     const lengthInput = document.getElementById('length-input');
-
-    // Selectors for passphrase mode
     const ppLengthSlider = document.getElementById('pp-length-slider');
     const ppLengthInput = document.getElementById('pp-length-input');
     const dictionarySelect = document.getElementById('dictionary-select');
-    const passphraseSeparatorInput = document.getElementById('passphrase-separator-input');
+
+    // Selectors for icons and modals
+    const helpIcon = document.getElementById('help-icon');
+    const infoIcon = document.getElementById('info-icon');
+    const helpModal = document.getElementById('help_modal');
+    const infoModal = document.getElementById('info_modal');
 
     // --- Slider Synchronization ---
     lengthSlider.addEventListener('input', (e) => { lengthInput.value = e.target.value; });
@@ -59,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isPassphrase) {
             options.length = ppLengthInput.value;
-            options.separator = passphraseSeparatorInput.value;
+            options.separator = document.getElementById('passphrase-separator-input').value;
             options.dictionary = dictionarySelect.value;
         } else {
             options.length = lengthInput.value;
@@ -120,6 +121,17 @@ document.addEventListener('DOMContentLoaded', () => {
     modeToggle.addEventListener('change', toggleMode);
     document.querySelectorAll('#password-options input, #password-options .toggle').forEach(item => item.addEventListener('input', fetchPassword));
     document.querySelectorAll('#passphrase-options input, #passphrase-options select').forEach(item => item.addEventListener('input', fetchPassword));
+
+    // Event listeners for modal icons
+    helpIcon.addEventListener('click', (e) => {
+        e.preventDefault();
+        helpModal.showModal();
+    });
+
+    infoIcon.addEventListener('click', (e) => {
+        e.preventDefault();
+        infoModal.showModal();
+    });
 
     // --- Initialization ---
     loadDictionaries().then(() => {
