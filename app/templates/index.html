@@ -1,93 +1,113 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="card w-full max-w-2xl bg-base-100 shadow-xl glass">
-    <div class="card-body">
-        <h1 class="card-title text-4xl justify-center items-center mb-2">
-            <span class="text-4xl mr-3">🔐</span>
-            NovaPass
-        </h1>
-        <div class="form-control self-center mb-4">
-            <label class="label cursor-pointer">
-                <span class="label-text mr-3">Password</span>
-                <input type="checkbox" id="mode-toggle" class="toggle toggle-primary" />
-                <span class="label-text ml-3">Passphrase</span>
-            </label>
-        </div>
-        <div class="form-control mb-2">
-            <div class="join">
-                <input id="password-display" type="text" placeholder="Your password will appear here..." class="input input-bordered join-item w-full text-xl text-center" readonly/>
-                <button id="copy-button" class="btn btn-primary join-item">Copy</button>
-            </div>
-        </div>
-        <div id="strength-indicator" class="space-y-1 mb-4">
-            <progress id="strength-bar" class="progress w-full" value="0" max="128"></progress>
-            <div class="flex justify-between text-xs">
-                <span id="strength-text" class="font-bold"></span>
-                <span id="strength-time"></span>
-            </div>
-        </div>
-        <div id="password-options">
-            <div class="form-control">
-                <label class="label">
-                    <span class="label-text">Length:</span>
-                    <input type="number" id="length-input" min="8" max="1024" value="16" class="input input-sm input-bordered w-20 text-center" />
-                </label>
-                <input id="length-slider" type="range" min="8" max="64" value="16" class="range range-primary" />
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                <div class="form-control items-center">
-                    <label class="label cursor-pointer" for="option-upper"><span class="label-text">Uppercase (A-Z)</span></label>
-                    <input id="option-upper" type="checkbox" checked="checked" class="toggle toggle-primary" />
+<div class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+    <div class="flex justify-center lg:justify-end w-full">
+        <div class="card w-full max-w-2xl bg-base-100 shadow-xl glass">
+            <div class="card-body">
+                <h1 class="card-title text-4xl justify-center items-center mb-2">
+                    <span class="text-4xl mr-3">🔐</span>
+                    NovaPass
+                </h1>
+                <div class="form-control self-center mb-4">
+                    <label class="label cursor-pointer">
+                        <span class="label-text mr-3">Password</span> 
+                        <input type="checkbox" id="mode-toggle" class="toggle toggle-primary" />
+                        <span class="label-text ml-3">Passphrase</span>
+                    </label>
                 </div>
-                <div class="form-control items-center">
-                    <label class="label cursor-pointer" for="option-lower"><span class="label-text">Lowercase (a-z)</span></label>
-                    <input id="option-lower" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                <div class="form-control mb-2">
+                    <div class="join">
+                        <input id="password-display" type="text" placeholder="Your password will appear here..." class="input input-bordered join-item w-full text-xl text-center" readonly/>
+                        <button id="copy-button" class="btn btn-primary join-item">Copy</button>
+                    </div>
                 </div>
-                <div class="form-control items-center">
-                    <label class="label cursor-pointer" for="option-digits"><span class="label-text">Numbers (0-9)</span></label>
-                    <input id="option-digits" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                <div id="strength-indicator" class="space-y-1 mb-4">
+                    <progress id="strength-bar" class="progress w-full" value="0" max="128"></progress>
+                    <div class="flex justify-between text-xs">
+                        <span id="strength-text" class="font-bold"></span>
+                        <span id="strength-time"></span>
+                    </div>
                 </div>
-                <div class="form-control items-center">
-                    <label class="label cursor-pointer" for="option-symbols"><span class="label-text">Symbols (!@#$)</span></label>
-                    <input id="option-symbols" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                <div id="password-options">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Length:</span>
+                            <input type="number" id="length-input" min="8" max="1024" value="16" class="input input-sm input-bordered w-20 text-center" />
+                        </label>
+                        <input id="length-slider" type="range" min="8" max="64" value="16" class="range range-primary" />
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                        <div class="form-control items-center">
+                            <label class="label cursor-pointer" for="option-upper"><span class="label-text">Uppercase (A-Z)</span></label>
+                            <input id="option-upper" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                        </div>
+                        <div class="form-control items-center">
+                            <label class="label cursor-pointer" for="option-lower"><span class="label-text">Lowercase (a-z)</span></label>
+                            <input id="option-lower" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                        </div>
+                        <div class="form-control items-center">
+                            <label class="label cursor-pointer" for="option-digits"><span class="label-text">Numbers (0-9)</span></label>
+                            <input id="option-digits" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                        </div>
+                        <div class="form-control items-center">
+                            <label class="label cursor-pointer" for="option-symbols"><span class="label-text">Symbols (!@#$)</span></label>
+                            <input id="option-symbols" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                        </div>
+                    </div>
+                    <div class="form-control w-full mt-4">
+                        <label class="label" for="exclude-input"><span class="label-text">Exclude Characters:</span></label>
+                        <input type="text" id="exclude-input" placeholder="e.g., O0Il" class="input input-bordered w-full" />
+                    </div>
+                </div>
+                <div id="passphrase-options" class="hidden space-y-4">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Number of words:</span>
+                            <input type="number" id="pp-length-input" min="3" max="10" value="4" class="input input-sm input-bordered w-20 text-center" />
+                        </label>
+                        <input type="range" id="pp-length-slider" min="3" max="10" value="4" class="range range-primary" />
+                    </div>
+                    <div class="form-control">
+                        <label class="label" for="dictionary-select">
+                            <span class="label-text">Dictionary:</span>
+                        </label>
+                        <select id="dictionary-select" class="select select-bordered w-full"></select>
+                    </div>
+                    <div class="form-control">
+                        <label class="label" for="passphrase-separator-input">
+                            <span class="label-text">Separator:</span>
+                        </label>
+                        <input type="text" id="passphrase-separator-input" value="-" class="input input-bordered w-full" />
+                    </div>
+                </div>
+                <div class="card-actions justify-center mt-6">
+                    <button id="generate-button" class="btn btn-primary btn-wide text-lg">Generate</button>
                 </div>
             </div>
-            <div class="form-control w-full mt-4">
-                <label class="label" for="exclude-input"><span class="label-text">Exclude Characters:</span></label>
-                <input type="text" id="exclude-input" placeholder="e.g., O0Il" class="input input-bordered w-full" />
-            </div>
-        </div>
-        <div id="passphrase-options" class="hidden space-y-4">
-            <div class="form-control">
-                <label class="label">
-                    <span class="label-text">Number of words:</span>
-                    <input type="number" id="pp-length-input" min="3" max="10" value="4" class="input input-sm input-bordered w-20 text-center" />
-                </label>
-                <input type="range" id="pp-length-slider" min="3" max="10" value="4" class="range range-primary" />
-            </div>
-            <div class="form-control">
-                <label class="label" for="dictionary-select">
-                    <span class="label-text">Dictionary:</span>
-                </label>
-                <select id="dictionary-select" class="select select-bordered w-full"></select>
-            </div>
-            <div class="form-control">
-                <label class="label" for="passphrase-separator-input">
-                    <span class="label-text">Separator:</span>
-                </label>
-                <input type="text" id="passphrase-separator-input" value="-" class="input input-bordered w-full" />
-            </div>
-        </div>
-        <div class="card-actions justify-center mt-6">
-            <button id="generate-button" class="btn btn-primary btn-wide text-lg">Generate</button>
         </div>
     </div>
+
+    <div class="hidden lg:flex flex-col text-left">
+        <h2 class="text-5xl font-bold text-base-content leading-tight">
+            Generate <br/>
+            <span id="dynamic-word-container" class="text-neutral">
+                <span id="dynamic-word"></span>
+                <span class="blinking-cursor">|</span>
+            </span>
+            <br/> Passwords.
+        </h2>
+        <p class="text-base-content text-opacity-70 mt-4">
+            Create strong, secure, and unique passwords and passphrases&nbsp;instantly.
+        </p>
+    </div>
+
 </div>
 
-<footer class="fixed bottom-4 right-4 text-base-content text-opacity-70">
+<footer class="mt-8 text-center lg:fixed lg:bottom-4 lg:right-4 text-base-content text-opacity-70">
     <div class="flex justify-center items-center space-x-4">
-        <a href="https://github.com/ClementLG/NovaPass" target="_blank" rel="noopener noreferrer" class="tooltip" data-tip="GitHub Project">
+        <a href="YOUR_GITHUB_LINK_HERE" target="_blank" rel="noopener noreferrer" class="tooltip" data-tip="GitHub Project">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 hover:opacity-70"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
         </a>
         <a id="help-icon" href="#" class="tooltip" data-tip="Help">
@@ -125,8 +145,8 @@
     <p class="py-4"><strong>NovaPass</strong> is a password generator built with Python, Flask, and daisyUI.</p>
     <div class="divider">Wordlist Sources</div>
     <ul class="list-disc list-inside">
-        <li>French wordlist: Based on the <a href="https://github.com/mbelivo/diceware-wordlists-fr" target="_blank" rel="noopener" class="link">alt Diceware list</a>, adapted for French.</li>
-        <li>English wordlist: Based on a list of common nouns from <a href="https://www.ef.fr/ressources-anglais/vocabulaire-anglais/top-3000/" target="_blank" rel="noopener" class="link">ef.com</a>.</li>
+        <li>French wordlist: Based on the <a href="http://world.std.com/~reinhold/diceware.html" target="_blank" rel="noopener" class="link">Diceware list</a>, adapted for French.</li>
+        <li>English wordlist: Based on a list of common nouns from <a href="https://www.ef.com/" target="_blank" rel="noopener" class="link">ef.com</a>.</li>
     </ul>
     <div class="modal-action">
       <form method="dialog">

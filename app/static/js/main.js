@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const ppLengthSlider = document.getElementById('pp-length-slider');
     const ppLengthInput = document.getElementById('pp-length-input');
     const dictionarySelect = document.getElementById('dictionary-select');
-
-    // Selectors for icons and modals
     const helpIcon = document.getElementById('help-icon');
     const infoIcon = document.getElementById('info-icon');
     const helpModal = document.getElementById('help_modal');
@@ -92,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const dicts = await response.json();
             dictionarySelect.innerHTML = '';
             if (dicts.length === 0) {
-                dictionarySelect.innerHTML = '<option disabled>No dictionaries found</option>';
+                dictionarySelect.innerHTML = '<option disabled>No dictionaries found in ./dictionaries/</option>';
             } else {
                 dicts.forEach(dictName => {
                     const option = document.createElement('option');
@@ -114,6 +112,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch(err => { console.error('Error copying:', err); });
     };
 
+    // --- Slogan Animation Logic ---
+    const dynamicWordEl = document.getElementById('dynamic-word');
+    if (dynamicWordEl) {
+        const wordsToAnimate = ["Secure", "Robust", "Unique", "Unbreakable", "Private"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        const typeAnimation = () => {
+            const currentWord = wordsToAnimate[wordIndex];
+            const part = isDeleting
+                ? currentWord.substring(0, charIndex - 1)
+                : currentWord.substring(0, charIndex + 1);
+
+            dynamicWordEl.textContent = part;
+            isDeleting ? charIndex-- : charIndex++;
+
+            let delay = isDeleting ? 100 : 150;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                delay = 2000; // Pause before deleting
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % wordsToAnimate.length;
+                delay = 500; // Pause before typing next word
+            }
+            setTimeout(typeAnimation, delay);
+        };
+        typeAnimation(); // Start the animation
+    }
+
     // --- Event Listeners ---
     document.getElementById('generate-button').addEventListener('click', fetchPassword);
     document.getElementById('copy-button').addEventListener('click', copyPassword);
@@ -122,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#password-options input, #password-options .toggle').forEach(item => item.addEventListener('input', fetchPassword));
     document.querySelectorAll('#passphrase-options input, #passphrase-options select').forEach(item => item.addEventListener('input', fetchPassword));
 
-    // Event listeners for modal icons
     helpIcon.addEventListener('click', (e) => {
         e.preventDefault();
         helpModal.showModal();
