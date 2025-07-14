@@ -1,5 +1,8 @@
-/* app/static/css/animation.css */
-
+/*
+  This animation works by moving the position of multiple radial gradients
+  at the same time. Each "background-position" in the keyframes corresponds
+  to a "background-image" defined below, making them move at different rates.
+*/
 @keyframes moveBlobs {
     0% {
         background-position: 0% 50%, 50% 100%, 100% 50%;
@@ -18,32 +21,32 @@
     }
 }
 
-/* --- Thème sombre (Luxury) - Palette Jaune/Orange "Lave" --- */
+/* --- Dark Theme (Luxury) - Yellow/Orange "Lava" Palette --- */
 [data-theme="luxury"] body {
-    /* Fond très sombre, presque noir mais avec une teinte chaude */
+    /* A very dark, almost black background with a warm tint */
     background-color: hsl(30, 20%, 8%);
     background-image:
-        /* Grosse bulle orange foncé */
+        /* Large, dark orange blob */
         radial-gradient(circle at 10% 20%, hsl(30, 80%, 30%) 0px, transparent 50%),
-        /* Bulle orange vif */
+        /* Bright orange blob */
         radial-gradient(circle at 80% 50%, hsl(40, 90%, 50%) 0px, transparent 50%),
-        /* Touche de jaune/or lumineuse */
+        /* Bright yellow/gold highlight */
         radial-gradient(circle at 40% 90%, hsl(50, 100%, 60%, 0.5) 0px, transparent 60%);
 
     background-size: 200% 200%;
     animation: moveBlobs 25s ease infinite;
 }
 
-/* --- Thème clair (Bumblebee) - Palette Jaune/Orange "Soleil" --- */
+/* --- Light Theme (Bumblebee) - Yellow/Orange "Sun" Palette --- */
 [data-theme="bumblebee"] body {
-    /* Fond jaune très pâle */
+    /* Very pale yellow background */
     background-color: hsl(50, 100%, 95%);
     background-image:
-        /* Bulle orange douce */
+        /* Soft orange blob */
         radial-gradient(circle at 0% 0%, hsl(35, 100%, 80%) 0px, transparent 50%),
-        /* Bulle jaune vif */
+        /* Bright yellow blob */
         radial-gradient(circle at 50% 100%, hsl(50, 100%, 75%) 0px, transparent 50%),
-        /* Bulle orange plus soutenue */
+        /* Richer orange accent blob */
         radial-gradient(circle at 100% 20%, hsl(30, 90%, 70%) 0px, transparent 50%);
 
     background-size: 200% 200%;
