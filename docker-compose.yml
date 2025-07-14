@@ -10,5 +10,7 @@ services:
       - "5000:5000"
 
     # Mounts local directories into the container.
+    # This is very useful for development: any change to your local code
+    # will be immediately reflected in the container without needing to rebuild the image.
     volumes:
       - ./dictionaries:/app/dictionaries
