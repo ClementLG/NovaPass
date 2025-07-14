@@ -1,0 +1,14 @@
+services:
+  # Service name (you can name it whatever you want)
+  novapass-web:
+    # Tells Compose to build the image using the Dockerfile
+    # in the current directory ('.')
+    build: .
+
+    # Maps port 5000 on your host machine to port 5000 in the container
+    ports:
+      - "5000:5000"
+
+    # Mounts local directories into the container.
+    volumes:
+      - ./dictionaries:/app/dictionaries
