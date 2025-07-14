@@ -1,0 +1,51 @@
+/* app/static/css/animation.css */
+
+@keyframes moveBlobs {
+    0% {
+        background-position: 0% 50%, 50% 100%, 100% 50%;
+    }
+    25% {
+        background-position: 0% 0%, 80% 80%, 50% 100%;
+    }
+    50% {
+        background-position: 50% 0%, 100% 50%, 0% 50%;
+    }
+    75% {
+        background-position: 100% 100%, 20% 20%, 0% 0%;
+    }
+    100% {
+        background-position: 0% 50%, 50% 100%, 100% 50%;
+    }
+}
+
+/* --- Thème sombre (Luxury) - Palette Jaune/Orange "Lave" --- */
+[data-theme="luxury"] body {
+    /* Fond très sombre, presque noir mais avec une teinte chaude */
+    background-color: hsl(30, 20%, 8%);
+    background-image:
+        /* Grosse bulle orange foncé */
+        radial-gradient(circle at 10% 20%, hsl(30, 80%, 30%) 0px, transparent 50%),
+        /* Bulle orange vif */
+        radial-gradient(circle at 80% 50%, hsl(40, 90%, 50%) 0px, transparent 50%),
+        /* Touche de jaune/or lumineuse */
+        radial-gradient(circle at 40% 90%, hsl(50, 100%, 60%, 0.5) 0px, transparent 60%);
+
+    background-size: 200% 200%;
+    animation: moveBlobs 25s ease infinite;
+}
+
+/* --- Thème clair (Bumblebee) - Palette Jaune/Orange "Soleil" --- */
+[data-theme="bumblebee"] body {
+    /* Fond jaune très pâle */
+    background-color: hsl(50, 100%, 95%);
+    background-image:
+        /* Bulle orange douce */
+        radial-gradient(circle at 0% 0%, hsl(35, 100%, 80%) 0px, transparent 50%),
+        /* Bulle jaune vif */
+        radial-gradient(circle at 50% 100%, hsl(50, 100%, 75%) 0px, transparent 50%),
+        /* Bulle orange plus soutenue */
+        radial-gradient(circle at 100% 20%, hsl(30, 90%, 70%) 0px, transparent 50%);
+
+    background-size: 200% 200%;
+    animation: moveBlobs 25s ease infinite;
+}

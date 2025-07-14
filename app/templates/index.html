@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card w-full max-w-2xl bg-base-100 shadow-xl glass">
+    <div class="card-body">
+        <h1 class="card-title text-4xl justify-center items-center mb-4">
+            <span class="text-4xl mr-3">🔐</span>
+            NovaPass
+        </h1>
+
+        <div class="form-control mb-4">
+            <div class="join">
+                <input id="password-display" type="text" placeholder="Your password will appear here..." class="input input-bordered join-item w-full text-xl text-center" readonly/>
+                <button id="copy-button" class="btn btn-primary join-item">Copy</button>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label class="label cursor-pointer">
+                <span class="label-text">Length: <span id="length-label">16</span></span>
+            </label>
+            <input id="length-slider" type="range" min="8" max="64" value="16" class="range range-primary" />
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+
+            <div class="form-control items-center">
+                <label class="label cursor-pointer" for="option-upper">
+                    <span class="label-text">Uppercase (A-Z)</span>
+                </label>
+                <input id="option-upper" type="checkbox" checked="checked" class="toggle toggle-primary" />
+            </div>
+
+            <div class="form-control items-center">
+                <label class="label cursor-pointer" for="option-lower">
+                    <span class="label-text">Lowercase (a-z)</span>
+                </label>
+                <input id="option-lower" type="checkbox" checked="checked" class="toggle toggle-primary" />
+            </div>
+
+            <div class="form-control items-center">
+                <label class="label cursor-pointer" for="option-digits">
+                    <span class="label-text">Numbers (0-9)</span>
+                </label>
+                <input id="option-digits" type="checkbox" checked="checked" class="toggle toggle-primary" />
+            </div>
+
+            <div class="form-control items-center">
+                <label class="label cursor-pointer" for="option-symbols">
+                    <span class="label-text">Symbols (!@#$)</span>
+                </label>
+                <input id="option-symbols" type="checkbox" checked="checked" class="toggle toggle-primary" />
+            </div>
+
+        </div>
+
+        <div class="card-actions justify-center mt-6">
+            <button id="generate-button" class="btn btn-primary btn-wide text-lg">Generate</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
