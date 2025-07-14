@@ -3,12 +3,21 @@
 
 <div class="card w-full max-w-2xl bg-base-100 shadow-xl glass">
     <div class="card-body">
-        <h1 class="card-title text-4xl justify-center items-center mb-4">
+        <h1 class="card-title text-4xl justify-center items-center mb-2">
             <span class="text-4xl mr-3">🔐</span>
             NovaPass
         </h1>
 
-        <div class="form-control mb-2"> <div class="join">
+        <div class="form-control self-center mb-4">
+            <label class="label cursor-pointer">
+                <span class="label-text mr-3">Password</span>
+                <input type="checkbox" id="mode-toggle" class="toggle toggle-primary" />
+                <span class="label-text ml-3">Passphrase</span>
+            </label>
+        </div>
+
+        <div class="form-control mb-2">
+            <div class="join">
                 <input id="password-display" type="text" placeholder="Your password will appear here..." class="input input-bordered join-item w-full text-xl text-center" readonly/>
                 <button id="copy-button" class="btn btn-primary join-item">Copy</button>
             </div>
@@ -22,46 +31,58 @@
             </div>
         </div>
 
-        <div class="form-control">
-            <label class="label">
-                <span class="label-text">Length:</span>
-                <input type="number" id="length-input" min="8" max="1024" value="16" class="input input-sm input-bordered w-20 text-center" />
-            </label>
-            <input id="length-slider" type="range" min="8" max="64" value="16" class="range range-primary" />
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-            <div class="form-control items-center">
-                <label class="label cursor-pointer" for="option-upper">
-                    <span class="label-text">Uppercase (A-Z)</span>
+        <div id="password-options">
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Length:</span>
+                    <input type="number" id="length-input" min="8" max="1024" value="16" class="input input-sm input-bordered w-20 text-center" />
                 </label>
-                <input id="option-upper" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                <input id="length-slider" type="range" min="8" max="64" value="16" class="range range-primary" />
             </div>
-            <div class="form-control items-center">
-                <label class="label cursor-pointer" for="option-lower">
-                    <span class="label-text">Lowercase (a-z)</span>
-                </label>
-                <input id="option-lower" type="checkbox" checked="checked" class="toggle toggle-primary" />
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                <div class="form-control items-center">
+                    <label class="label cursor-pointer" for="option-upper"><span class="label-text">Uppercase (A-Z)</span></label>
+                    <input id="option-upper" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                </div>
+                <div class="form-control items-center">
+                    <label class="label cursor-pointer" for="option-lower"><span class="label-text">Lowercase (a-z)</span></label>
+                    <input id="option-lower" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                </div>
+                <div class="form-control items-center">
+                    <label class="label cursor-pointer" for="option-digits"><span class="label-text">Numbers (0-9)</span></label>
+                    <input id="option-digits" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                </div>
+                <div class="form-control items-center">
+                    <label class="label cursor-pointer" for="option-symbols"><span class="label-text">Symbols (!@#$)</span></label>
+                    <input id="option-symbols" type="checkbox" checked="checked" class="toggle toggle-primary" />
+                </div>
             </div>
-            <div class="form-control items-center">
-                <label class="label cursor-pointer" for="option-digits">
-                    <span class="label-text">Numbers (0-9)</span>
-                </label>
-                <input id="option-digits" type="checkbox" checked="checked" class="toggle toggle-primary" />
-            </div>
-            <div class="form-control items-center">
-                <label class="label cursor-pointer" for="option-symbols">
-                    <span class="label-text">Symbols (!@#$)</span>
-                </label>
-                <input id="option-symbols" type="checkbox" checked="checked" class="toggle toggle-primary" />
+            <div class="form-control w-full mt-4">
+                <label class="label" for="exclude-input"><span class="label-text">Exclude Characters:</span></label>
+                <input type="text" id="exclude-input" placeholder="e.g., O0Il" class="input input-bordered w-full" />
             </div>
         </div>
 
-        <div class="form-control w-full mt-4">
-            <label class="label" for="exclude-input">
-                <span class="label-text">Exclude Characters:</span>
-            </label>
-            <input type="text" id="exclude-input" placeholder="e.g., O0Il" class="input input-bordered w-full" />
+        <div id="passphrase-options" class="hidden space-y-4">
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Number of words:</span>
+                    <input type="number" id="pp-length-input" min="3" max="10" value="4" class="input input-sm input-bordered w-20 text-center" />
+                </label>
+                <input type="range" id="pp-length-slider" min="3" max="10" value="4" class="range range-primary" />
+            </div>
+            <div class="form-control">
+                <label class="label" for="dictionary-select">
+                    <span class="label-text">Dictionary:</span>
+                </label>
+                <select id="dictionary-select" class="select select-bordered w-full"></select>
+            </div>
+            <div class="form-control">
+                <label class="label" for="passphrase-separator-input">
+                    <span class="label-text">Separator:</span>
+                </label>
+                <input type="text" id="passphrase-separator-input" value="-" class="input input-bordered w-full" />
+            </div>
         </div>
 
         <div class="card-actions justify-center mt-6">
