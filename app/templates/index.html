@@ -8,10 +8,17 @@
             NovaPass
         </h1>
 
-        <div class="form-control mb-4">
-            <div class="join">
+        <div class="form-control mb-2"> <div class="join">
                 <input id="password-display" type="text" placeholder="Your password will appear here..." class="input input-bordered join-item w-full text-xl text-center" readonly/>
                 <button id="copy-button" class="btn btn-primary join-item">Copy</button>
+            </div>
+        </div>
+
+        <div id="strength-indicator" class="space-y-1 mb-4">
+            <progress id="strength-bar" class="progress w-full" value="0" max="128"></progress>
+            <div class="flex justify-between text-xs">
+                <span id="strength-text" class="font-bold"></span>
+                <span id="strength-time"></span>
             </div>
         </div>
 
@@ -24,35 +31,30 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-
             <div class="form-control items-center">
                 <label class="label cursor-pointer" for="option-upper">
                     <span class="label-text">Uppercase (A-Z)</span>
                 </label>
                 <input id="option-upper" type="checkbox" checked="checked" class="toggle toggle-primary" />
             </div>
-
             <div class="form-control items-center">
                 <label class="label cursor-pointer" for="option-lower">
                     <span class="label-text">Lowercase (a-z)</span>
                 </label>
                 <input id="option-lower" type="checkbox" checked="checked" class="toggle toggle-primary" />
             </div>
-
             <div class="form-control items-center">
                 <label class="label cursor-pointer" for="option-digits">
                     <span class="label-text">Numbers (0-9)</span>
                 </label>
                 <input id="option-digits" type="checkbox" checked="checked" class="toggle toggle-primary" />
             </div>
-
             <div class="form-control items-center">
                 <label class="label cursor-pointer" for="option-symbols">
                     <span class="label-text">Symbols (!@#$)</span>
                 </label>
                 <input id="option-symbols" type="checkbox" checked="checked" class="toggle toggle-primary" />
             </div>
-
         </div>
 
         <div class="form-control w-full mt-4">

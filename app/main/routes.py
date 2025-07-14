@@ -14,17 +14,17 @@ def index():
 def api_generate_password():
     """
     API endpoint to generate a password.
-    Takes options in JSON and returns the password.
+    Takes options in JSON and returns the password and strength data.
     """
     options = request.get_json()
 
-    password = generate_secure_password(
-        length=int(options.get('length', 16)),
+    result_data = generate_secure_password(
+        length=options.get('length', 16),
         upper=bool(options.get('upper', True)),
         lower=bool(options.get('lower', True)),
         digits=bool(options.get('digits', True)),
         symbols=bool(options.get('symbols', True)),
-        exclude_chars=options.get('exclude', '')  # On passe les caractères à exclure
+        exclude_chars=options.get('exclude', '')
     )
 
-    return jsonify({'password': password})
+    return jsonify(result_data)
