@@ -16,8 +16,9 @@
         </div>
 
         <div class="form-control">
-            <label class="label cursor-pointer">
-                <span class="label-text">Length: <span id="length-label">16</span></span>
+            <label class="label">
+                <span class="label-text">Length:</span>
+                <input type="number" id="length-input" min="8" max="1024" value="16" class="input input-sm input-bordered w-20 text-center" />
             </label>
             <input id="length-slider" type="range" min="8" max="64" value="16" class="range range-primary" />
         </div>
@@ -52,6 +53,13 @@
                 <input id="option-symbols" type="checkbox" checked="checked" class="toggle toggle-primary" />
             </div>
 
+        </div>
+
+        <div class="form-control w-full mt-4">
+            <label class="label" for="exclude-input">
+                <span class="label-text">Exclude Characters:</span>
+            </label>
+            <input type="text" id="exclude-input" placeholder="e.g., O0Il" class="input input-bordered w-full" />
         </div>
 
         <div class="card-actions justify-center mt-6">

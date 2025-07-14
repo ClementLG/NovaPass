@@ -1,22 +1,20 @@
-# app/main/routes.py
 from flask import render_template, jsonify, request, Blueprint
 from app.core.password_generator import generate_secure_password
 
-# On crée un Blueprint pour mieux organiser notre code
 main = Blueprint('main', __name__)
 
 
 @main.route('/')
 def index():
-    """Affiche la page principale."""
+    """Displays the main page."""
     return render_template('index.html')
 
 
 @main.route('/api/generate', methods=['POST'])
 def api_generate_password():
     """
-    Point d'API pour générer un mot de passe.
-    Prend les options en JSON et retourne le mot de passe.
+    API endpoint to generate a password.
+    Takes options in JSON and returns the password.
     """
     options = request.get_json()
 
@@ -25,7 +23,8 @@ def api_generate_password():
         upper=bool(options.get('upper', True)),
         lower=bool(options.get('lower', True)),
         digits=bool(options.get('digits', True)),
-        symbols=bool(options.get('symbols', True))
+        symbols=bool(options.get('symbols', True)),
+        exclude_chars=options.get('exclude', '')  # On passe les caractères à exclure
     )
 
     return jsonify({'password': password})

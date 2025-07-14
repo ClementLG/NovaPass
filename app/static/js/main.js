@@ -1,23 +1,44 @@
-// app/static/js/main.js
 document.addEventListener('DOMContentLoaded', () => {
 
     const generateBtn = document.getElementById('generate-button');
     const copyBtn = document.getElementById('copy-button');
     const passwordDisplay = document.getElementById('password-display');
+
     const lengthSlider = document.getElementById('length-slider');
-    const lengthLabel = document.getElementById('length-label');
+    const lengthInput = document.getElementById('length-input');
+    const excludeInput = document.getElementById('exclude-input'); // Nouveau sélecteur
+
+    // --- Logique de synchronisation ---
 
     lengthSlider.addEventListener('input', (e) => {
-        lengthLabel.textContent = e.target.value;
+        lengthInput.value = e.target.value;
+    });
+
+    lengthInput.addEventListener('input', (e) => {
+        let value = parseInt(e.target.value);
+        const sliderMax = parseInt(lengthSlider.max);
+        const inputMax = parseInt(e.target.max);
+
+        if (value > inputMax) {
+            value = inputMax;
+            e.target.value = inputMax;
+        }
+
+        if (value >= lengthSlider.min && value <= sliderMax) {
+            lengthSlider.value = value;
+        } else if (value > sliderMax) {
+            lengthSlider.value = sliderMax;
+        }
     });
 
     const fetchPassword = async () => {
         const options = {
-            length: lengthSlider.value,
+            length: lengthInput.value,
             upper: document.getElementById('option-upper').checked,
             lower: document.getElementById('option-lower').checked,
             digits: document.getElementById('option-digits').checked,
             symbols: document.getElementById('option-symbols').checked,
+            exclude: excludeInput.value // Ajout des caractères à exclure
         };
 
         try {
@@ -40,9 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!passwordDisplay.value) return;
 
         navigator.clipboard.writeText(passwordDisplay.value).then(() => {
-            copyBtn.textContent = 'Copied!'; // Text in English
+            copyBtn.textContent = 'Copied!';
             setTimeout(() => {
-                copyBtn.textContent = 'Copy'; // Text in English
+                copyBtn.textContent = 'Copy';
             }, 2000);
         }).catch(err => {
             console.error('Error copying:', err);
@@ -51,6 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     generateBtn.addEventListener('click', fetchPassword);
     copyBtn.addEventListener('click', copyPassword);
+
+    // Ajout des écouteurs pour la génération automatique
+    document.querySelectorAll('.toggle').forEach(item => item.addEventListener('change', fetchPassword));
+    lengthInput.addEventListener('input', fetchPassword);
+    lengthSlider.addEventListener('input', fetchPassword);
+    excludeInput.addEventListener('input', fetchPassword);
+
 
     fetchPassword();
 });
