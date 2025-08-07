@@ -63,6 +63,9 @@ def api_generate_password():
             dictionary:
               type: string
               description: The dictionary to use for passphrase generation
+            exclude_chars:
+              type: string
+              description: Characters to exclude from the password
     responses:
       200:
         description: The generated password

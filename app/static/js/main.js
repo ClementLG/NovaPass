@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             options.lower = document.getElementById('option-lower').checked;
             options.digits = document.getElementById('option-digits').checked;
             options.symbols = document.getElementById('option-symbols').checked;
-            options.exclude = document.getElementById('exclude-input').value;
+            options.exclude_chars = document.getElementById('exclude-input').value;
         }
 
         try {
