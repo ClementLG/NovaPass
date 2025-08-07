@@ -12,7 +12,17 @@ def index():
 
 @main.route('/api/dictionaries')
 def get_dictionaries():
-    """Scans the dictionaries directory and returns a list of available files."""
+    """
+    Get the list of available dictionaries
+    ---
+    responses:
+      200:
+        description: A list of available dictionaries
+        schema:
+          type: array
+          items:
+            type: string
+    """
     try:
         dict_path = 'dictionaries'
         if not os.path.exists(dict_path):
@@ -28,6 +38,35 @@ def get_dictionaries():
 
 @main.route('/api/generate', methods=['POST'])
 def api_generate_password():
+    """
+    Generate a password
+    ---
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          id: PasswordOptions
+          required:
+            - mode
+          properties:
+            mode:
+              type: string
+              description: The generation mode (e.g., 'password', 'passphrase')
+              enum: ['password', 'passphrase']
+            length:
+              type: integer
+              description: The length of the password
+            num_words:
+              type: integer
+              description: The number of words for a passphrase
+            dictionary:
+              type: string
+              description: The dictionary to use for passphrase generation
+    responses:
+      200:
+        description: The generated password
+    """
     options = request.get_json()
 
     # Get the mode and pass all other options
