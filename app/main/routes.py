@@ -1,5 +1,5 @@
 import os
-from flask import render_template, jsonify, request, Blueprint
+from flask import render_template, jsonify, request, Blueprint, current_app
 from app.core.password_generator import generate
 
 main = Blueprint('main', __name__)
@@ -24,7 +24,7 @@ def get_dictionaries():
             type: string
     """
     try:
-        dict_path = 'dictionaries'
+        dict_path = current_app.config['DICTIONARY_DIR']
         if not os.path.exists(dict_path):
             return jsonify([])
 

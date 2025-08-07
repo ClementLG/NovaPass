@@ -34,9 +34,9 @@
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Length:</span>
-                            <input type="number" id="length-input" min="8" max="1024" value="16" class="input input-sm input-bordered w-20 text-center" />
+                            <input type="number" id="length-input" min="{{ config.PASSWORD_MIN_LENGTH }}" max="{{ config.PASSWORD_MAX_LENGTH }}" value="{{ config.PASSWORD_DEFAULT_LENGTH }}" class="input input-sm input-bordered w-20 text-center" />
                         </label>
-                        <input id="length-slider" type="range" min="8" max="64" value="16" class="range range-primary" />
+                        <input id="length-slider" type="range" min="{{ config.PASSWORD_MIN_LENGTH }}" max="64" value="{{ config.PASSWORD_DEFAULT_LENGTH }}" class="range range-primary" />
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                         <div class="form-control items-center">
@@ -71,9 +71,9 @@
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Number of words:</span>
-                            <input type="number" id="pp-length-input" min="3" max="10" value="4" class="input input-sm input-bordered w-20 text-center" />
+                            <input type="number" id="pp-length-input" min="{{ config.PASSPHRASE_MIN_WORDS }}" max="{{ config.PASSPHRASE_MAX_WORDS }}" value="{{ config.PASSPHRASE_DEFAULT_WORDS }}" class="input input-sm input-bordered w-20 text-center" />
                         </label>
-                        <input type="range" id="pp-length-slider" min="3" max="10" value="4" class="range range-primary" />
+                        <input type="range" id="pp-length-slider" min="{{ config.PASSPHRASE_MIN_WORDS }}" max="{{ config.PASSPHRASE_MAX_WORDS }}" value="{{ config.PASSPHRASE_DEFAULT_WORDS }}" class="range range-primary" />
                     </div>
                     <div class="form-control">
                         <label class="label" for="dictionary-select">
