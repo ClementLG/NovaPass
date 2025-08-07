@@ -4,13 +4,10 @@ import math
 import os  # Imported to list files
 
 
-def get_strength(password_length, pool_size):
-    """Calculates password strength based on entropy."""
-    if pool_size == 0 or password_length == 0:
+def get_strength_from_entropy(entropy):
+    """Calculates password strength based on a given entropy value."""
+    if entropy == 0:
         return {"text": "", "time_to_crack": "", "entropy": 0}
-
-    # Entropy calculation: H = L * log2(N)
-    entropy = password_length * math.log2(pool_size)
 
     # Time to crack estimation (assuming 1 trillion guesses per second)
     guesses_per_second = 1_000_000_000_000
@@ -43,6 +40,16 @@ def get_strength(password_length, pool_size):
         text = "Excellent"
 
     return {"text": text, "time_to_crack": f"~ {time_str} to crack", "entropy": round(entropy)}
+
+
+def get_strength(password_length, pool_size):
+    """Calculates password strength based on entropy."""
+    if pool_size == 0 or password_length == 0:
+        return get_strength_from_entropy(0)
+
+    # Entropy calculation: H = L * log2(N)
+    entropy = password_length * math.log2(pool_size)
+    return get_strength_from_entropy(entropy)
 
 
 def load_words_from_file(dictionary_name):
@@ -106,12 +113,7 @@ def generate_passphrase(length: int = 4, separator: str = '-', dictionary: str =
 
     # Passphrase entropy is based on the number of possible words
     entropy = length * math.log2(word_pool_size)
-
-    # Recalculate the total "length" for the strength display
-    # (this is not perfect but gives a good idea)
-    fake_length_for_strength = entropy / math.log2(52)  # Simulates an alphanumeric password
-
-    strength_info = get_strength(fake_length_for_strength, 52)
+    strength_info = get_strength_from_entropy(entropy)
 
     chosen_words = [secrets.choice(words) for _ in range(length)]
     passphrase = separator.join(chosen_words)
