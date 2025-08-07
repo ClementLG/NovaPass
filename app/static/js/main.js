@@ -17,9 +17,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoIcon = document.getElementById('info-icon');
     const helpModal = document.getElementById('help_modal');
     const infoModal = document.getElementById('info_modal');
+    const excludeConfusableToggle = document.getElementById('exclude-confusable-toggle');
+    const excludeInput = document.getElementById('exclude-input');
 
-    // --- Slider Synchronization ---
-    lengthSlider.addEventListener('input', (e) => { lengthInput.value = e.target.value; });
+    // --- Confusable Characters ---
+    const confusableChars = "iIlL1oO0'`";
+
+    const updateExcludeInput = () => {
+        const currentExcludes = excludeInput.value.split('');
+        const confusable = confusableChars.split('');
+
+        let newExcludes;
+
+        if (excludeConfusableToggle.checked) {
+            // Add confusable characters, avoiding duplicates
+            newExcludes = [...new Set([...currentExcludes, ...confusable])];
+        } else {
+            // Remove only the confusable characters
+            newExcludes = currentExcludes.filter(char => !confusable.includes(char));
+        }
+
+        excludeInput.value = newExcludes.join('');
+        fetchPassword();
+    };
+
+     // --- Slider Synchronization ---
+     lengthSlider.addEventListener('input', (e) => { lengthInput.value = e.target.value; });
     lengthInput.addEventListener('input', (e) => {
         let value = parseInt(e.target.value);
         const sliderMax = parseInt(lengthSlider.max);
@@ -149,7 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('copy-button').addEventListener('click', copyPassword);
 
     modeToggle.addEventListener('change', toggleMode);
-    document.querySelectorAll('#password-options input, #password-options .toggle').forEach(item => item.addEventListener('input', fetchPassword));
+    document.querySelectorAll('#password-options input, #password-options .toggle').forEach(item => {
+        if (item.id !== 'exclude-confusable-toggle') { // Avoid double-triggering
+            item.addEventListener('input', fetchPassword);
+        }
+    });
+    excludeConfusableToggle.addEventListener('change', updateExcludeInput);
     document.querySelectorAll('#passphrase-options input, #passphrase-options select').forEach(item => item.addEventListener('input', fetchPassword));
 
     helpIcon.addEventListener('click', (e) => {
