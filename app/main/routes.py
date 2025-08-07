@@ -56,10 +56,7 @@ def api_generate_password():
               enum: ['password', 'passphrase']
             length:
               type: integer
-              description: The length of the password
-            num_words:
-              type: integer
-              description: The number of words for a passphrase
+              description: The length of the password or the number of words for a passphrase
             dictionary:
               type: string
               description: The dictionary to use for passphrase generation
@@ -71,6 +68,8 @@ def api_generate_password():
         description: The generated password
     """
     options = request.get_json()
+    if 'num_words' in options:
+        options['length'] = options.pop('num_words')
 
     # Get the mode and pass all other options
     mode = options.pop('mode', 'password')
