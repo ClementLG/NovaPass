@@ -18,9 +18,28 @@
                     </label>
                 </div>
                 <div class="form-control mb-2">
-                    <div class="join">
-                        <input id="password-display" type="text" placeholder="Your password will appear here..." class="input input-bordered join-item w-full text-xl text-center" readonly/>
-                        <button id="copy-button" class="btn btn-primary join-item">Copy</button>
+                    <div class="dropdown w-full">
+                        <div tabindex="0" role="button" class="join w-full">
+                            <input id="password-display" type="text" placeholder="Your password will appear here..." class="input input-bordered join-item w-full text-xl text-center" readonly/>
+                            <button id="copy-button" class="btn btn-primary join-item">
+                                <span id="copy-button-text">Copy</span>
+                                <svg id="copy-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="m6 9 6 6 6-6"/></svg>
+                            </button>
+                        </div>
+                        <div tabindex="0" id="password-list-dropdown" class="dropdown-content z-[1] bg-base-200 rounded-box shadow w-full max-h-60 flex flex-col hidden">
+                            <div class="p-2 border-b border-base-300">
+                                <div class="flex justify-between items-center">
+                                    <label class="label cursor-pointer">
+                                        <span class="label-text">Select All</span>
+                                        <input type="checkbox" id="select-all-passwords" class="checkbox checkbox-primary ml-2"/>
+                                    </label>
+                                    <button id="copy-selected-button" class="btn btn-secondary btn-sm">Copy Selected</button>
+                                </div>
+                            </div>
+                            <div id="password-list-items" class="flex-grow overflow-y-auto p-2">
+                                <!-- Passwords will be inserted here by JS -->
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="strength-indicator" class="space-y-1 mb-4">
@@ -36,7 +55,7 @@
                             <span class="label-text">Length:</span>
                             <input type="number" id="length-input" min="{{ config.PASSWORD_MIN_LENGTH }}" max="{{ config.PASSWORD_MAX_LENGTH }}" value="{{ config.PASSWORD_DEFAULT_LENGTH }}" class="input input-sm input-bordered w-20 text-center" />
                         </label>
-                        <input id="length-slider" type="range" min="{{ config.PASSWORD_MIN_LENGTH }}" max="64" value="{{ config.PASSWORD_DEFAULT_LENGTH }}" class="range range-primary" />
+                        <input id="length-slider" type="range" min="{{ config.PASSWORD_MIN_LENGTH }}" max="{{ config.PASSWORD_SLIDER_MAX }}" value="{{ config.PASSWORD_DEFAULT_LENGTH }}" class="range range-primary" />
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                         <div class="form-control items-center">
@@ -73,7 +92,7 @@
                             <span class="label-text">Number of words:</span>
                             <input type="number" id="pp-length-input" min="{{ config.PASSPHRASE_MIN_WORDS }}" max="{{ config.PASSPHRASE_MAX_WORDS }}" value="{{ config.PASSPHRASE_DEFAULT_WORDS }}" class="input input-sm input-bordered w-20 text-center" />
                         </label>
-                        <input type="range" id="pp-length-slider" min="{{ config.PASSPHRASE_MIN_WORDS }}" max="{{ config.PASSPHRASE_MAX_WORDS }}" value="{{ config.PASSPHRASE_DEFAULT_WORDS }}" class="range range-primary" />
+                        <input type="range" id="pp-length-slider" min="{{ config.PASSPHRASE_MIN_WORDS }}" max="{{ config.PASSPHRASE_SLIDER_MAX }}" value="{{ config.PASSPHRASE_DEFAULT_WORDS }}" class="range range-primary" />
                     </div>
                     <div class="form-control">
                         <label class="label" for="dictionary-select">
@@ -88,8 +107,15 @@
                         <input type="text" id="passphrase-separator-input" value="-" class="input input-bordered w-full" />
                     </div>
                 </div>
+                <div class="form-control mt-4">
+                    <label class="label">
+                        <span class="label-text">Number of passwords:</span>
+                        <input type="number" id="quantity-input" min="1" max="{{ config.MAX_QUANTITY }}" value="1" class="input input-sm input-bordered w-20 text-center" />
+                    </label>
+                </div>
                 <div class="card-actions justify-center mt-6">
                     <button id="generate-button" class="btn btn-primary btn-wide text-lg">Generate</button>
+                    <button id="export-csv-button" class="btn btn-secondary btn-wide text-lg hidden">Export CSV</button>
                 </div>
             </div>
         </div>
