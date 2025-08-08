@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.dropdown-content.hidden {
+    display: none;
+}
+.password-checkbox:checked {
+    --chkbg: oklch(var(--p));
+    --chkfg: oklch(var(--pc));
+}
+
+#copy-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}

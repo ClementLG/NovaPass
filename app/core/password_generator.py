@@ -1,5 +1,6 @@
 import string
 import secrets
+from flask import current_app
 import math
 import os  # Imported to list files
 
@@ -9,23 +10,27 @@ def get_strength_from_entropy(entropy):
     if entropy == 0:
         return {"text": "", "time_to_crack": "", "entropy": 0}
 
-    # Time to crack estimation (assuming 1 trillion guesses per second)
-    guesses_per_second = 1_000_000_000_000
-    seconds_to_crack = (2 ** entropy) / guesses_per_second
-
-    # Convert seconds to a readable format
-    if seconds_to_crack < 60:
-        time_str = "instantly"
-    elif seconds_to_crack < 3600:
-        time_str = f"{seconds_to_crack / 60:.0f} minutes"
-    elif seconds_to_crack < 86400:
-        time_str = f"{seconds_to_crack / 3600:.0f} hours"
-    elif seconds_to_crack < 31536000:
-        time_str = f"{seconds_to_crack / 86400:.0f} days"
-    elif seconds_to_crack < 31536000 * 100:
-        time_str = f"{seconds_to_crack / 31536000:.0f} years"
-    else:
+    # For very high entropy, the time to crack is effectively infinite and can cause overflow
+    if entropy > 128:  # 128 bits is already astronomically secure
         time_str = "centuries"
+    else:
+        # Time to crack estimation (assuming 1 trillion guesses per second)
+        guesses_per_second = 1_000_000_000_000
+        seconds_to_crack = (2 ** entropy) / guesses_per_second
+
+        # Convert seconds to a readable format
+        if seconds_to_crack < 60:
+            time_str = "instantly"
+        elif seconds_to_crack < 3600:
+            time_str = f"{seconds_to_crack / 60:.0f} minutes"
+        elif seconds_to_crack < 86400:
+            time_str = f"{seconds_to_crack / 3600:.0f} hours"
+        elif seconds_to_crack < 31536000:
+            time_str = f"{seconds_to_crack / 86400:.0f} days"
+        elif seconds_to_crack < 31536000 * 100:
+            time_str = f"{seconds_to_crack / 31536000:.0f} years"
+        else:
+            time_str = "centuries"
 
     # Determine strength text based on entropy
     if entropy < 40:
@@ -66,18 +71,27 @@ def load_words_from_file(dictionary_name):
         return []
 
 
-def generate(mode: str = 'password', **options) -> dict:
+def generate(mode: str = 'password', **options) -> list:
     """Main generation function that dispatches to the correct generator."""
-    if mode == 'passphrase':
-        return generate_passphrase(**options)
-    else:
-        return generate_password(**options)
+    max_quantity = current_app.config.get('MAX_QUANTITY', 100)
+    quantity = min(options.pop('quantity', 1), max_quantity)
+    results = []
+    for _ in range(quantity):
+        if mode == 'passphrase':
+            results.append(generate_passphrase(**options))
+        else:
+            results.append(generate_password(**options))
+    return results
 
 
 def generate_password(length: int = 16, upper: bool = True, lower: bool = True, digits: bool = True,
                       symbols: bool = True, exclude_chars: str = '', **kwargs) -> dict:
     """Generates a standard password."""
     length = max(0, int(length))
+    # Add a reasonable upper limit to prevent performance issues
+    if length > 8192:
+        return {"password": "Error: Length is too high.", "strength": get_strength(0, 0)}
+
     alphabet = ''
     if upper: alphabet += string.ascii_uppercase
     if lower: alphabet += string.ascii_lowercase

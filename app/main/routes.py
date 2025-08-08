@@ -57,6 +57,9 @@ def api_generate_password():
             length:
               type: integer
               description: The length of the password or the number of words for a passphrase
+            quantity:
+              type: integer
+              description: The number of passwords to generate
             dictionary:
               type: string
               description: The dictionary to use for passphrase generation
@@ -65,7 +68,7 @@ def api_generate_password():
               description: Characters to exclude from the password
     responses:
       200:
-        description: The generated password
+        description: A list of generated passwords
     """
     options = request.get_json()
     if 'num_words' in options:
