@@ -6,8 +6,8 @@ services:
     build: .
 
     # Maps port 5000 on your host machine to port 5000 in the container
-    ports:
-      - "5000:5000"
+    #ports:
+      #- "5000:5000"
 
     # Mounts local directories into the container.
     # This is very useful for development: any change to your local code
